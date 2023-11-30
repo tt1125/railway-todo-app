@@ -10,21 +10,21 @@ export const NewTask = () => {
   const [selectListId, setSelectListId] = useState();
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState("")
-  const [time, setTime] = useState("")
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [detail, setDetail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
   const history = useHistory();
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDateChange = (e) => setDate(e.target.value);
-  const handleTimeChange = (e) => setTime(e.target.value)
+  const handleTimeChange = (e) => setTime(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleSelectList = (id) => setSelectListId(id);
   const onCreateTask = () => {
     const data = {
       title: title,
-      deadline: date + "-" + time,
+      limit: date + "T" + time + ":00Z",
       detail: detail,
       done: false,
     };
@@ -59,6 +59,13 @@ export const NewTask = () => {
       });
   }, []);
 
+  useEffect(() => {
+    console.log("dateを更新しました", date);
+  }, [date]);
+  useEffect(() => {
+    console.log("timeを更新しました", time);
+  }, [time]);
+
   return (
     <div>
       <Header />
@@ -89,7 +96,8 @@ export const NewTask = () => {
           <br />
           <label>期限</label>
           <br />
-          <input type="date" onChange={handleDateChange} /><input type="time" onChange={handleTimeChange} />
+          <input type="date" onChange={handleDateChange} />
+          <input type="time" onChange={handleTimeChange} />
           {/* <p>期限 {date} {time}</p> */}
           <br />
           <label>詳細</label>

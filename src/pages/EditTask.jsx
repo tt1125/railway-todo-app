@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Header } from "../components/Header";
 import axios from "axios";
 import { useCookies } from "react-cookie";
@@ -11,16 +11,23 @@ export const EditTask = () => {
   const { listId, taskId } = useParams();
   const [cookies] = useCookies();
   const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [detail, setDetail] = useState("");
   const [isDone, setIsDone] = useState();
   const [errorMessage, setErrorMessage] = useState("");
   const handleTitleChange = (e) => setTitle(e.target.value);
+  const handleDateChange = (e) => setDate(e.target.value);
+  const handleTimeChange = (e) => setTime(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleIsDoneChange = (e) => setIsDone(e.target.value === "done");
   const onUpdateTask = () => {
+    const limit = date + "T" + time + ":00Z";
+
     console.log(isDone);
     const data = {
       title: title,
+      limit: limit,
       detail: detail,
       done: isDone,
     };
@@ -34,6 +41,7 @@ export const EditTask = () => {
       .then((res) => {
         console.log(res.data);
         history.push("/");
+        console.log("更新するdataを確認", data);
       })
       .catch((err) => {
         setErrorMessage(`更新に失敗しました。${err}`);
@@ -65,6 +73,8 @@ export const EditTask = () => {
       .then((res) => {
         const task = res.data;
         setTitle(task.title);
+        setDate(task.limit.slice(0, 10));
+        setTime(task.limit.slice(11, 16));
         setDetail(task.detail);
         setIsDone(task.done);
       })
@@ -88,6 +98,11 @@ export const EditTask = () => {
             className="edit-task-title"
             value={title}
           />
+          <br />
+          <label>期限</label>
+          <br />
+          <input type="date" value={date} onChange={handleDateChange} />
+          <input type="time" value={time} onChange={handleTimeChange} />
           <br />
           <label>詳細</label>
           <br />

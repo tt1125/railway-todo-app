@@ -122,11 +122,45 @@ export const Home = () => {
   );
 };
 
-// 表示するタスク
-const Tasks = (props) => {
+const Tasks = (props) => { //limitから残り日数を返す関数
+
+  const getTimeLimit = (limit) => {
+    const deadline = new Date(limit)
+    const deadlineHours = deadline.getHours()
+    deadline.setHours(deadlineHours -9) //時差を修正
+    const now = new Date();
+    if (now > deadline) {
+      return "期限が過ぎました";
+    }
+
+    // 目標日時と現在日時の差分を計算
+    const timeDifference = deadline - now;
+
+    // 残り時間を日数、時間、分に変換
+    const remainingDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const remainingHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+    const remainingMinutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60))
+
+    // 残り時間を指定のフォーマットで表示
+    console.log(`残り時間は${remainingDays}日${remainingHours}時間${remainingMinutes}分`);
+    return `${remainingDays}日${remainingHours}時間${remainingMinutes}分`;
+  }
+
+  function formatDate(limit) { //YYYY-MM-DDTHH:MM:SSZを書き直す関数
+
+    const year = limit.slice(0, 4)
+    const month = limit.slice(5, 7)
+    const day = limit.slice(8, 10)
+    const hours = limit.slice(11, 13)
+    const minutes = limit.slice(14, 16)
+
+    const formattedDate = `${year}年${month}月${day}日 ${hours}時${minutes}分`;
+
+    return formattedDate;
+  }
+
   const { tasks, selectListId, isDoneDisplay } = props;
   if (tasks === null) return <></>;
-
   if (isDoneDisplay == "done") {
     return (
       <ul>
@@ -134,18 +168,20 @@ const Tasks = (props) => {
           .filter((task) => {
             return task.done === true;
           })
-          .map((task, key) => (
-            <li key={key} className="task-item">
-              <Link
-                to={`/lists/${selectListId}/tasks/${task.id}`}
-                className="task-item-link"
-              >
-                {task.title}
-                <br />
-                {task.done ? "完了" : "未完了"}
-              </Link>
-            </li>
-          ))}
+          .map((task, key) => {
+            return (
+              <li key={key} className="task-item">
+                <Link
+                  to={`/lists/${selectListId}/tasks/${task.id}`}
+                  className="task-item-link"
+                >
+                  {task.done ? "完了" : "未完了"} ＜期限＞ {formatDate(task.limit)} <br /> 
+                  {task.title} 
+                </Link>
+
+              </li>
+            )
+          })}
       </ul>
     );
   }
@@ -156,15 +192,16 @@ const Tasks = (props) => {
         .filter((task) => {
           return task.done === false;
         })
-        .map((task, key) => (
+        .map((task, key) =>
+        (
           <li key={key} className="task-item">
             <Link
               to={`/lists/${selectListId}/tasks/${task.id}`}
               className="task-item-link"
-            >
-              {task.title}
+            >{task.done ? "完了" : "未完了"} ＜期限＞ {formatDate(task.limit)} ＜期限までの日時＞ {getTimeLimit(task.limit)} 
               <br />
-              {task.done ? "完了" : "未完了"}
+              {task.title} 
+              <br />
             </Link>
           </li>
         ))}
