@@ -9,6 +9,7 @@ import { NewList } from "../pages/NewList";
 import { EditTask } from "../pages/EditTask";
 import { SignUp } from "../pages/SignUp";
 import { EditList } from "../pages/EditList";
+import {Test} from "../pages/Test"
 
 export const Router = () => {
   const auth = useSelector((state) => state.auth.isSignIn);
@@ -16,6 +17,7 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
+        <Route exact path="/test" component={Test}/>
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup" component={SignUp} />
         {auth ? (

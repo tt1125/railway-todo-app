@@ -9,7 +9,7 @@ import "./home.scss";
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState("todo"); // todo->未完了 done->完了
   const [lists, setLists] = useState([]);
-  const [selectListId, setSelectListId] = useState();
+  const [selectListId, setSelectListId] = useState("");
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
@@ -23,6 +23,7 @@ export const Home = () => {
       })
       .then((res) => {
         setLists(res.data);
+        console.log(res.data, "Listsの確認")
       })
       .catch((err) => {
         setErrorMessage(`リストの取得に失敗しました。${err}`);
@@ -31,6 +32,7 @@ export const Home = () => {
 
   useEffect(() => {
     const listId = lists[0]?.id;
+    console.log("listIdの確認", listId, getListIndex(listId))
     if (typeof listId !== "undefined") {
       setSelectListId(listId);
       axios
@@ -63,6 +65,33 @@ export const Home = () => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`);
       });
   };
+
+  const getListIndex = (listId) => {
+    return lists.findIndex(list => list.id === listId);
+  };
+  
+  const handleKey= (event) => {
+    const currentIndex = getListIndex(selectListId);
+  
+    if (event.key === 'ArrowRight') {
+      if (currentIndex > -1 && currentIndex < lists.length - 1) {
+        setSelectListId(lists[currentIndex + 1].id);
+      }
+    } else if (event.key === 'ArrowLeft') {
+      if (currentIndex > 0 && currentIndex <= lists.length) {
+        setSelectListId(lists[currentIndex - 1].id);
+      }
+    }
+  };
+  
+ 
+  useEffect(() => {
+    window.addEventListener('keydown', handleKey);
+    return () => {
+      window.removeEventListener('keydown', handleKey);
+    };
+  }, [selectListId]);
+
   return (
     <div>
       <Header />
@@ -89,7 +118,7 @@ export const Home = () => {
                 <li
                   key={key}
                   className={`list-tab-item ${isActive ? "active" : ""}`}
-                  onClick={() => handleSelectList(list.id)}
+                  onClick={() => { handleSelectList(list.id); console.log(list.id) }}
                 >
                   {list.title}
                 </li>
@@ -127,7 +156,7 @@ const Tasks = (props) => { //limitから残り日数を返す関数
   const getTimeLimit = (limit) => {
     const deadline = new Date(limit)
     const deadlineHours = deadline.getHours()
-    deadline.setHours(deadlineHours -9) //時差を修正
+    deadline.setHours(deadlineHours - 9) //時差を修正
     const now = new Date();
     if (now > deadline) {
       return "期限が過ぎました";
@@ -175,8 +204,8 @@ const Tasks = (props) => { //limitから残り日数を返す関数
                   to={`/lists/${selectListId}/tasks/${task.id}`}
                   className="task-item-link"
                 >
-                  {task.done ? "完了" : "未完了"} ＜期限＞ {formatDate(task.limit)} <br /> 
-                  {task.title} 
+                  {task.done ? "完了" : "未完了"} ＜期限＞ {formatDate(task.limit)} <br />
+                  {task.title}
                 </Link>
 
               </li>
@@ -198,9 +227,9 @@ const Tasks = (props) => { //limitから残り日数を返す関数
             <Link
               to={`/lists/${selectListId}/tasks/${task.id}`}
               className="task-item-link"
-            >{task.done ? "完了" : "未完了"} ＜期限＞ {formatDate(task.limit)} ＜期限までの日時＞ {getTimeLimit(task.limit)} 
+            >{task.done ? "完了" : "未完了"} ＜期限＞ {formatDate(task.limit)} ＜期限までの日時＞ {getTimeLimit(task.limit)}
               <br />
-              {task.title} 
+              {task.title}
               <br />
             </Link>
           </li>
