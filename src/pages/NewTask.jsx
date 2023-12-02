@@ -4,27 +4,24 @@ import axios from "axios";
 import { url } from "../const";
 import { Header } from "../components/Header";
 import "./newTask.scss";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState();
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [limit, setLimit] = useState("");
   const [detail, setDetail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
-  const navigate = useNavigate();
   const handleTitleChange = (e) => setTitle(e.target.value);
-  const handleDateChange = (e) => setDate(e.target.value);
-  const handleTimeChange = (e) => setTime(e.target.value);
+  const handleLimitChange = (e) => setLimit(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleSelectList = (id) => setSelectListId(id);
   const onCreateTask = () => {
     const data = {
       title: title,
-      limit: date + "T" + time + ":00Z",
+      limit: limit + ":00Z",
       detail: detail,
       done: false,
     };
@@ -36,7 +33,7 @@ export const NewTask = () => {
         },
       })
       .then(() => {
-        navigate.push("/");
+        return <Navigate to="/" />;
       })
       .catch((err) => {
         setErrorMessage(`タスクの作成に失敗しました。${err}`);
@@ -58,14 +55,9 @@ export const NewTask = () => {
         setErrorMessage(`リストの取得に失敗しました。${err}`);
       });
   }, []);
-
   useEffect(() => {
-    console.log("dateを更新しました", date);
-  }, [date]);
-  useEffect(() => {
-    console.log("timeを更新しました", time);
-  }, [time]);
-
+    console.log(limit);
+  }, [limit]);
   return (
     <div>
       <Header />
@@ -96,9 +88,7 @@ export const NewTask = () => {
           <br />
           <label>期限</label>
           <br />
-          <input type="date" onChange={handleDateChange} />
-          <input type="time" onChange={handleTimeChange} />
-          {/* <p>期限 {date} {time}</p> */}
+          <input type="datetime-local" onChange={handleLimitChange} />
           <br />
           <label>詳細</label>
           <br />

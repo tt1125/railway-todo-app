@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { url } from "../const";
 import "./editList.scss";
@@ -25,7 +25,7 @@ export const EditList = () => {
         },
       })
       .then(() => {
-        navigate.push("/");
+        navigate("/");
       })
       .catch((err) => {
         setErrorMessage(`更新に失敗しました。 ${err}`);
@@ -40,7 +40,7 @@ export const EditList = () => {
         },
       })
       .then(() => {
-        navigate.push("/");
+        navigate("/");
       })
       .catch((err) => {
         setErrorMessage(`削除に失敗しました。${err}`);

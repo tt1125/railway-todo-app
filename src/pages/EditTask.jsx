@@ -1,33 +1,29 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect,useState } from "react";
 import { Header } from "../components/Header";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { url } from "../const";
-import { useNavigate, useParams } from "react-router-dom";
+import {useNavigate , useParams } from "react-router-dom";
 import "./editTask.scss";
 
 export const EditTask = () => {
-  const navigate = useNavigate();
+const navigate = useNavigate();
   const { listId, taskId } = useParams();
   const [cookies] = useCookies();
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [limit, setLimit] = useState("");
   const [detail, setDetail] = useState("");
   const [isDone, setIsDone] = useState();
   const [errorMessage, setErrorMessage] = useState("");
   const handleTitleChange = (e) => setTitle(e.target.value);
-  const handleDateChange = (e) => setDate(e.target.value);
-  const handleTimeChange = (e) => setTime(e.target.value);
+  const handleLimitChange = (e) => setLimit(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleIsDoneChange = (e) => setIsDone(e.target.value === "done");
   const onUpdateTask = () => {
-    const limit = date + "T" + time + ":00Z";
-
-    console.log(isDone);
+    const newLimit = limit + ":00Z";
     const data = {
       title: title,
-      limit: limit,
+      limit: newLimit,
       detail: detail,
       done: isDone,
     };
@@ -39,10 +35,9 @@ export const EditTask = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
-        navigate.push("/");
-        console.log("更新するdataを確認", data);
+        console.log("更新ログ",res.data);
       })
+      .then( navigate("/"))
       .catch((err) => {
         setErrorMessage(`更新に失敗しました。${err}`);
       });
@@ -56,7 +51,7 @@ export const EditTask = () => {
         },
       })
       .then(() => {
-        navigate.push("/");
+        navigate("/");
       })
       .catch((err) => {
         setErrorMessage(`削除に失敗しました。${err}`);
@@ -73,8 +68,7 @@ export const EditTask = () => {
       .then((res) => {
         const task = res.data;
         setTitle(task.title);
-        setDate(task.limit.slice(0, 10));
-        setTime(task.limit.slice(11, 16));
+        setLimit(task.limit.slice(0, -4));
         setDetail(task.detail);
         setIsDone(task.done);
       })
@@ -101,8 +95,7 @@ export const EditTask = () => {
           <br />
           <label>期限</label>
           <br />
-          <input type="date" value={date} onChange={handleDateChange} />
-          <input type="time" value={time} onChange={handleTimeChange} />
+          <input type="datetime-local" value={limit} onChange={handleLimitChange} />
           <br />
           <label>詳細</label>
           <br />

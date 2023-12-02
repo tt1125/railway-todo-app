@@ -15,7 +15,7 @@ export const Home = () => {
   const [cookies] = useCookies();
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
 
-  useEffect(() => { //listsのfetch
+  useEffect(() => {
     axios
       .get(`${url}/lists`, {
         headers: {
@@ -93,7 +93,7 @@ export const Home = () => {
       })
       .then((res) => {
         setTasks(res.data.tasks);
-      })
+      });
     window.addEventListener("keydown", handleKey);
     return () => {
       window.removeEventListener("keydown", handleKey);
@@ -168,7 +168,7 @@ const Tasks = (props) => {
   const getTimeLimit = (limit) => {
     const deadline = new Date(limit);
     const deadlineHours = deadline.getHours();
-    deadline.setHours(deadlineHours - 9); //時差を修正
+    deadline.setHours(deadlineHours-9); //時差を修正
     const now = new Date();
     if (now > deadline) {
       return "期限が過ぎました";
