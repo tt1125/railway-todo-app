@@ -9,12 +9,13 @@ import "./home.scss";
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState("todo"); // todo->未完了 done->完了
   const [lists, setLists] = useState([]);
-  const [selectListId, setSelectListId] = useState("");
+  const [selectListId, setSelectListId] = useState(lists[0]?.id);
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
-  useEffect(() => {
+
+  useEffect(() => { //listsのfetch
     axios
       .get(`${url}/lists`, {
         headers: {
@@ -23,7 +24,6 @@ export const Home = () => {
       })
       .then((res) => {
         setLists(res.data);
-        console.log(res.data, "Listsの確認");
       })
       .catch((err) => {
         setErrorMessage(`リストの取得に失敗しました。${err}`);
@@ -85,6 +85,15 @@ export const Home = () => {
   };
 
   useEffect(() => {
+    axios
+      .get(`${url}/lists/${selectListId}/tasks`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then((res) => {
+        setTasks(res.data.tasks);
+      })
     window.addEventListener("keydown", handleKey);
     return () => {
       window.removeEventListener("keydown", handleKey);
