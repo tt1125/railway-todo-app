@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, NavLink} from "react-router-dom";
 import { Home } from "../pages/Home";
 import { NotFound } from "../pages/NotFound";
 import { SignIn } from "../pages/SignIn";
@@ -17,26 +17,27 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/test" Component={Test} />
-        <Route exact path="/signin" Component={SignIn} />
-        <Route exact path="/signup" Component={SignUp} />
+        <Route exact path="/test" element={<Test />} />
+        <Route exact path="/signin" element={<SignIn />} />
+        <Route exact path="/signup" element={<SignUp />} />
         {auth ? (
           <>
-            <Route exact path="/" Component={Home} />
-            <Route exact path="/task/new" Component={NewTask} />
-            <Route exact path="/list/new" Component={NewList} />
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/task/new" element={<NewTask />} />
+            <Route exact path="/list/new" element={<NewList />} />
             <Route
               exact
               path="/lists/:listId/tasks/:taskId"
-              Component={EditTask}
+              element={<EditTask />}
             />
-            <Route exact path="/lists/:listId/edit" Component={EditList} />
+            <Route exact path="/lists/:listId/edit" element={<EditList />} />
           </>
         ) : (
-          <Navigate to="/signin" />
+          <Route path="*" element={<Navigate to="/signin" />} />
         )}
-        <Route Component={NotFound} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
 };
+
