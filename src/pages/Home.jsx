@@ -14,7 +14,7 @@ export const Home = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
-
+  
   useEffect(() => {
     axios
       .get(`${url}/lists`, {
@@ -32,7 +32,6 @@ export const Home = () => {
 
   useEffect(() => {
     const listId = lists[0]?.id;
-    console.log("listIdの確認", listId, getListIndex(listId));
     if (typeof listId !== "undefined") {
       setSelectListId(listId);
       axios
