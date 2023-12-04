@@ -5,6 +5,7 @@ import axios from "axios";
 import { Header } from "../components/Header";
 import { url } from "../const";
 import "./home.scss";
+import PropTypes from "prop-types";
 
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState("todo"); // todo->未完了 done->完了
@@ -14,7 +15,7 @@ export const Home = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
-  
+
   useEffect(() => {
     axios
       .get(`${url}/lists`, {
@@ -164,10 +165,18 @@ export const Home = () => {
 const Tasks = (props) => {
   //limitから残り日数を返す関数
 
+  const { tasks, selectListId, isDoneDisplay } = props;
+
+  Tasks.propTypes = {
+    tasks: PropTypes.array.isRequired,
+    selectListId: PropTypes.string.isRequired,
+    isDoneDisplay: PropTypes.string.isRequired,
+  };
+
   const getTimeLimit = (limit) => {
     const deadline = new Date(limit);
     const deadlineHours = deadline.getHours();
-    deadline.setHours(deadlineHours-9); //時差を修正
+    deadline.setHours(deadlineHours - 9); //時差を修正
     const now = new Date();
     if (now > deadline) {
       return "期限が過ぎました";
@@ -206,7 +215,6 @@ const Tasks = (props) => {
     return formattedDate;
   }
 
-  const { tasks, selectListId, isDoneDisplay } = props;
   if (tasks === null) return <></>;
   if (isDoneDisplay == "done") {
     return (

@@ -1,13 +1,13 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { url } from "../const";
-import {useNavigate , useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./editTask.scss";
 
 export const EditTask = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const { listId, taskId } = useParams();
   const [cookies] = useCookies();
   const [title, setTitle] = useState("");
@@ -35,9 +35,9 @@ const navigate = useNavigate();
         },
       })
       .then((res) => {
-        console.log("更新ログ",res.data);
+        console.log("更新ログ", res.data);
       })
-      .then( navigate("/"))
+      .then(navigate("/"))
       .catch((err) => {
         setErrorMessage(`更新に失敗しました。${err}`);
       });
@@ -95,7 +95,11 @@ const navigate = useNavigate();
           <br />
           <label>期限</label>
           <br />
-          <input type="datetime-local" value={limit} onChange={handleLimitChange} />
+          <input
+            type="datetime-local"
+            value={limit}
+            onChange={handleLimitChange}
+          />
           <br />
           <label>詳細</label>
           <br />
