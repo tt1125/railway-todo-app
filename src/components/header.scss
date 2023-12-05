@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 .header {
-  width: 100%;
+  width: auto;
   height: 80px;
   background-color: #242f9b;
   color: #ffffff;
@@ -12,4 +12,7 @@
 .sign-out-button {
   color: #ffffff;
   margin: auto 25px auto auto;
+}
+
+@media (min-width: 321px) and (max-width: 768px) {
 }

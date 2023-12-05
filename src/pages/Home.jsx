@@ -101,7 +101,7 @@ export const Home = () => {
   }, [selectListId]);
 
   return (
-    <div>
+    <div className="outline">
       <Header />
       <main className="taskList">
         <p className="error-message">{errorMessage}</p>
@@ -150,6 +150,8 @@ export const Home = () => {
                 <option value="done">完了</option>
               </select>
             </div>
+            <br className="brSpace" />
+            <br className="brSpace" />
             <Tasks
               tasks={tasks}
               selectListId={selectListId}
@@ -230,9 +232,11 @@ const Tasks = (props) => {
                   to={`/lists/${selectListId}/tasks/${task.id}`}
                   className="task-item-link"
                 >
-                  {task.done ? "完了" : "未完了"} ＜期限＞{" "}
-                  {formatDate(task.limit)} <br />
-                  {task.title}
+                  <div className="doneContainer">
+                    {task.done ? "完了" : "未完了"}
+                  </div>{" "}
+                  ＜期限＞ {formatDate(task.limit)} <br />
+                  <span className="title">{task.title}</span>
                 </Link>
               </li>
             );
@@ -253,10 +257,13 @@ const Tasks = (props) => {
               to={`/lists/${selectListId}/tasks/${task.id}`}
               className="task-item-link"
             >
-              {task.done ? "完了" : "未完了"} ＜期限＞ {formatDate(task.limit)}{" "}
+              <div className="doneContainer">
+                {task.done ? "完了" : "未完了"}
+              </div>{" "}
+              ＜期限＞ {formatDate(task.limit)} <br className="brSpace" />
               ＜期限までの日時＞ {getTimeLimit(task.limit)}
               <br />
-              {task.title}
+              <span className="title">{task.title}</span>
               <br />
             </Link>
           </li>
