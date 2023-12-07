@@ -72,9 +72,10 @@ export const SignUp = () => {
             className="password-input"
           />
           <br />
+          <div className="div">
           <button type="button" onClick={onSignUp} className="signup-button">
             作成
-          </button>
+          </button></div>
         </form>
       </main>
     </div>

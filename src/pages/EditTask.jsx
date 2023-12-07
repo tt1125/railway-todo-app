@@ -110,7 +110,7 @@ export const EditTask = () => {
             value={detail}
           />
           <br />
-          <div>
+          <div className="radios">
             <input
               type="radio"
               id="todo"
@@ -130,6 +130,7 @@ export const EditTask = () => {
             />
             完了
           </div>
+          <div className="buttonWrapper">
           <button
             type="button"
             className="delete-task-button"
@@ -143,7 +144,7 @@ export const EditTask = () => {
             onClick={onUpdateTask}
           >
             更新
-          </button>
+          </button></div>
         </form>
       </main>
     </div>

@@ -88,7 +88,7 @@ export const NewTask = () => {
           <br />
           <label>期限</label>
           <br />
-          <input type="datetime-local" onChange={handleLimitChange} />
+          <input type="datetime-local" onChange={handleLimitChange} className="datetime"/>
           <br />
           <label>詳細</label>
           <br />

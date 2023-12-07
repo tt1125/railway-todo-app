@@ -101,66 +101,69 @@ export const Home = () => {
   }, [selectListId]);
 
   return (
-    <div className="outline">
+    <>
       <Header />
-      <main className="taskList">
-        <p className="error-message">{errorMessage}</p>
-        <div>
-          <div className="list-header">
-            <h2>リスト一覧</h2>
-            <div className="list-menu">
-              <p>
-                <Link to="/list/new">リスト新規作成</Link>
-              </p>
-              <p>
-                <Link to={`/lists/${selectListId}/edit`}>
-                  選択中のリストを編集
-                </Link>
-              </p>
+      <div className="outline">
+
+        <main className="taskList">
+          <p className="error-message">{errorMessage}</p>
+          <div>
+            <div className="list-header">
+              <h2>リスト一覧</h2>
+              <div className="list-menu">
+                <p>
+                  <Link to="/list/new">リスト新規作成</Link>
+                </p>
+                <p>
+                  <Link to={`/lists/${selectListId}/edit`}>
+                    選択中のリストを編集
+                  </Link>
+                </p>
+              </div>
             </div>
-          </div>
-          <ul className="list-tab">
-            {lists.map((list, key) => {
-              const isActive = list.id === selectListId;
-              return (
-                <li
-                  key={key}
-                  className={`list-tab-item ${isActive ? "active" : ""}`}
-                  onClick={() => {
-                    handleSelectList(list.id);
-                    console.log(list.id);
-                  }}
+            <ul className="list-tab">
+              {lists.map((list, key) => {
+                const isActive = list.id === selectListId;
+                return (
+                  <li
+                    key={key}
+                    className={`list-tab-item ${isActive ? "active" : ""}`}
+                    onClick={() => {
+                      handleSelectList(list.id);
+                      console.log(list.id);
+                    }}
+                  >
+                    {list.title}
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="tasks">
+              <div className="tasks-header">
+                <h2>タスク一覧</h2>
+                <Link to="/task/new">タスク新規作成</Link>
+              </div>
+              <div className="display-select-wrapper">
+                <select
+                  onChange={handleIsDoneDisplayChange}
+                  className="display-select"
                 >
-                  {list.title}
-                </li>
-              );
-            })}
-          </ul>
-          <div className="tasks">
-            <div className="tasks-header">
-              <h2>タスク一覧</h2>
-              <Link to="/task/new">タスク新規作成</Link>
+                  <option value="todo">未完了</option>
+                  <option value="done">完了</option>
+                </select>
+              </div>
+              <br className="brSpace" />
+              <br className="brSpace" />
+              <Tasks
+                tasks={tasks}
+                selectListId={selectListId}
+                isDoneDisplay={isDoneDisplay}
+              />
             </div>
-            <div className="display-select-wrapper">
-              <select
-                onChange={handleIsDoneDisplayChange}
-                className="display-select"
-              >
-                <option value="todo">未完了</option>
-                <option value="done">完了</option>
-              </select>
-            </div>
-            <br className="brSpace" />
-            <br className="brSpace" />
-            <Tasks
-              tasks={tasks}
-              selectListId={selectListId}
-              isDoneDisplay={isDoneDisplay}
-            />
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 };
 

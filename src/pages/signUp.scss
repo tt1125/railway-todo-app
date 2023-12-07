@@ -1,31 +1,118 @@
 @charset "utf-8";
-
-.signup {
-  width: 500px;
-  margin: 0 auto;
+@media(min-width:769px){
+  .signup {
+    width: 500px;
+    margin: 0 auto;
+    h2{
+      margin-top: 20px;
+  font-size: xx-large;
+    }
+  }
+  .signup-form {
+    margin: 25px 0;
+    color: #555555;
+  }
+  
+  .email-input,
+  .name-input,
+  .password-input {
+    width: 100%;
+    font-size: large;
+    height: 30px;
+    margin-bottom: 25px;
+  }
+  
+  .signup-button {
+    background-color: #242f9b;
+    color: #ffffff;
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+  }
+  
+  .error-message {
+    color: #ff3333;
+  }
+  
 }
-.signup-form {
-  margin: 25px 0;
-  color: #555555;
-}
+@media(min-width:321px) and (max-width:768px){
+  .signup {
+    width:70%;
+    margin: 0 auto;
+    h2{
+      margin-top: 20px;
+    }
+  }
+  .signup-form {
+    margin: 25px 0;
+    color: #555555;
+    .div{
+      width: auto;
+      display: flex;
+      justify-content: space-evenly;
+      .signup-button {
+        background-color: #242f9b;
+        color: #ffffff;
+        width: 100px;
+        height: 40px;
+        border-radius: 5px;
+      }
+    }
+  }
+  
+  .email-input,
+  .name-input,
+  .password-input {
+    width: 100%;
+    font-size: large;
+    height: 30px;
+    margin-bottom: 25px;
+  }
+  
 
-.email-input,
-.name-input,
-.password-input {
-  width: 100%;
-  font-size: large;
-  height: 30px;
-  margin-bottom: 25px;
+  
+  .error-message {
+    color: #ff3333;
+  }
+  
 }
+@media(max-width:320px){
+  .signup {
+    width:90%;
+    margin: 0 auto;
+    h2{
+      margin-top: 10px;
+    }
+  }
+  .signup-form {
+    margin: 10px 0;
+    color: #555555;
+    .div{
+      width: auto;
+      display: flex;
+      justify-content: space-evenly;
+      .signup-button {
+        background-color: #242f9b;
+        color: #ffffff;
+        width:90%;
+        height: 40px;
+        border-radius: 5px;
+      }
+    }
+  }
+  
+  .email-input,
+  .name-input,
+  .password-input {
+    width: 100%;
+    font-size: large;
+    height: 30px;
+    margin-bottom: 10px;
+  }
+  
 
-.signup-button {
-  background-color: #242f9b;
-  color: #ffffff;
-  width: 100px;
-  height: 40px;
-  border-radius: 5px;
-}
-
-.error-message {
-  color: #ff3333;
+  
+  .error-message {
+    color: #ff3333;
+  }
 }

@@ -1,33 +1,121 @@
 @charset "utf-8";
 
-.new-task {
-  width: 1000px;
-  margin: 0 auto;
+@media (min-width:769px) {
+  .new-task {
+
+    margin: 20px 50px;
+  }
+
+  .new-task-form {
+    color: #555555;
+  }
+
+  .new-task-select-list,
+  .new-task-title,
+  .new-task-detail {
+    width: 300px;
+    margin-bottom: 25px;
+  }
+
+  .new-task-detail {
+    height: 200px;
+  }
+
+  .new-task-button {
+    background-color: #242f9b;
+    color: #ffffff;
+    width: 80px;
+    height: 40px;
+    border-radius: 5px;
+  }
+
+  .error-message {
+    color: #ff3333;
+  }
 }
 
-.new-task-form {
-  color: #555555;
+@media (min-width:321px) and (max-width:768px) {
+  .new-task {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .new-task-form {
+    color: #555555;
+    width: 300px;
+    label{
+      font-size: larger;
+    }
+  }
+
+  .new-task-select-list,
+  .new-task-title,
+  .new-task-detail {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .new-task-detail {
+    height: 200px;
+  }
+
+  .new-task-button {
+    background-color: #242f9b;
+    color: #ffffff;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+
+  }
+
+  .error-message {
+    color: #ff3333;
+  }
 }
 
-.new-task-select-list,
-.new-task-title,
-.new-task-detail {
-  width: 300px;
-  margin-bottom: 25px;
-}
+@media (max-width:320px) {
+  .new-task {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+  }
 
-.new-task-detail {
-  height: 200px;
-}
+  .new-task-form {
+    color: #555555;
+    width: 90%;
+    label{
+      font-size: larger;
+    }
+ 
+    .datetime{
+      font-size: larger;
+    }
+  }
 
-.new-task-button {
-  background-color: #242f9b;
-  color: #ffffff;
-  width: 80px;
-  height: 40px;
-  border-radius: 5px;
-}
+  .new-task-select-list,
+  .new-task-title,
+  .new-task-detail {
+    width: 100%;
+    margin-bottom: 15px;
+  }
 
-.error-message {
-  color: #ff3333;
+  .new-task-detail {
+    height: 200px;
+  }
+
+  .new-task-button {
+    background-color: #242f9b;
+    color: #ffffff;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+
+  }
+
+  .error-message {
+    color: #ff3333;
+  }
 }

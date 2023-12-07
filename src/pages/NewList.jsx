@@ -46,13 +46,14 @@ export const NewList = () => {
             className="new-list-title"
           />
           <br />
+          <div className="buttonWrapper">
           <button
             type="button"
             onClick={onCreateList}
             className="new-list-button"
           >
             作成
-          </button>
+          </button></div>
         </form>
       </main>
     </div>

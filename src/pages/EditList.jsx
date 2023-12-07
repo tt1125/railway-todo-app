@@ -64,13 +64,15 @@ export const EditList = () => {
   }, []);
 
   return (
-    <div>
+
+    <div className="outline">
       <Header />
       <main className="edit-list">
+
         <h2>リスト編集</h2>
         <p className="error-message">{errorMessage}</p>
         <form className="edit-list-form">
-          <label>タイトル</label>
+          <label className="titleLabel">タイトル</label>
           <br />
           <input
             type="text"
@@ -79,6 +81,7 @@ export const EditList = () => {
             onChange={handleTitleChange}
           />
           <br />
+          <div className="buttonContainer">
           <button
             type="button"
             className="delete-list-button"
@@ -92,7 +95,7 @@ export const EditList = () => {
             onClick={onUpdateList}
           >
             更新
-          </button>
+          </button></div>
         </form>
       </main>
     </div>
